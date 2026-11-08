@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Monitoring - Repayment Rate Bone Bolango</title>
+  
+  <!-- Favicon Amartha Purple -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23631976'/><text x='50' y='65' font-size='42' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>A</text></svg>">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome untuk Ikon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            amartha: {
+              50: '#fbf5fd',
+              100: '#f4e8fa',
+              200: '#edd4f6',
+              300: '#dfb3ee',
+              400: '#c884e1',
+              500: '#aa55d0',
+              600: '#8c35b6',
+              700: '#732696',
+              800: '#5e1e7a',
+              900: '#4e1b64',
+              950: '#340a45',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Haluskan rendering SVG dan scrollbar */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+    ::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
+
+    /* Animasi pernapasan lembut logo saat loading */
+    @keyframes pulse-subtle {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.03); opacity: 0.93; }
+    }
+    .logo-bounce {
+      animation: pulse-subtle 2.2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-800 font-sans h-screen w-screen overflow-hidden m-0 p-0 select-none">
+
+  <!-- ================= MAIN CONTAINER FULLSCREEN ================= -->
+  <main class="relative w-screen h-screen overflow-hidden bg-white" id="iframeWrapper">
+    
+    <!-- IFRAME GOOGLE APPS SCRIPT AMARTHA (FULLSCREEN TANPA HEADER) -->
+    <!--
+      Tetap mendukung unduhan otomatis ke browser, kamera, GPS Geolocation, mikrofon,
+      dan interaksi formulir Google Apps Script.
+    -->
+    <iframe
+      id="appIframe"
+      src="https://script.google.com/a/macros/amartha.com/s/AKfycbzSoGeddU7FtX2j5w3cUiE8c-cd6kfAFLdn3uvJmu0o7ZKZOF3CILo-RPCuex1pAPdf/exec"
+      class="w-full h-full border-0 block"
+      allow="camera *; microphone *; geolocation *; clipboard-read *; clipboard-write *; fullscreen *; display-capture *; downloads *"
+      sandbox="allow-downloads allow-downloads-without-user-activation allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+      referrerpolicy="no-referrer-when-downgrade"
+      onload="onIframeLoaded()">
+    </iframe>
+
+    <!-- ================= LAYAR LOADING DENGAN LOGO UTAMA ================= -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center p-6 transition-all duration-700">
+      
+      <!-- LOGO AMARTHA REPAYMENT RATE (VEKTOR LENGKAP PERSIS GAMBAR) -->
+      <div class="w-full max-w-sm sm:max-w-md logo-bounce mb-8 px-4 flex items-center justify-center">
+        <svg class="w-full h-auto drop-shadow-md" viewBox="0 0 520 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- DEFS & GRADIENTS -->
+          <defs>
+            <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#9d2bb5" />
+              <stop offset="50%" stop-color="#711986" />
+              <stop offset="100%" stop-color="#4a0d5c" />
+            </linearGradient>
+            <linearGradient id="coinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ba53d6" />
+              <stop offset="100%" stop-color="#601275" />
+            </linearGradient>
+            <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#490a5e" />
+              <stop offset="30%" stop-color="#68157f" />
+              <stop offset="70%" stop-color="#7c1e95" />
+              <stop offset="100%" stop-color="#490a5e" />
+            </linearGradient>
+            <linearGradient id="lightWaveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#b651d2" />
+              <stop offset="100%" stop-color="#d68ef0" />
+            </linearGradient>
+            <filter id="softShadow" x="-10%" y="-10%" width="130%" height="130%">
+              <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#4a0d5c" flood-opacity="0.25" />
+            </filter>
+          </defs>
+
+          <!-- GROUP KIRI: KALENDER, GRAFIK & KOIN -->
+          <g transform="translate(10, 0)">
+            <!-- Kalender Ungu 3D -->
+            <g filter="url(#softShadow)">
+              <rect x="36" y="32" width="76" height="52" rx="10" fill="#4d105c" />
+              <rect x="42" y="38" width="66" height="46" rx="6" fill="#f8f4fb" />
+              <circle cx="58" cy="33" r="4" fill="#ffffff" stroke="#4d105c" stroke-width="2.5" />
+              <circle cx="92" cy="33" r="4" fill="#ffffff" stroke="#4d105c" stroke-width="2.5" />
+              <!-- Grid Kalender -->
+              <rect x="47" y="44" width="10" height="7" rx="1.5" fill="#d9b6e8" />
+              <rect x="61" y="44" width="10" height="7" rx="1.5" fill="#d9b6e8" />
+              <rect x="75" y="44" width="10" height="7" rx="1.5" fill="#d9b6e8" />
+              <rect x="89" y="44" width="10" height="7" rx="1.5" fill="#d9b6e8" />
+              <rect x="47" y="55" width="10" height="7" rx="1.5" fill="#d9b6e8" />
+              <rect x="61" y="55" width="10" height="7" rx="1.5" fill="#d9b6e8" />
+              <rect x="75" y="55" width="10" height="7" rx="1.5" fill="#d9b6e8" />
+              <rect x="89" y="55" width="10" height="7" rx="1.5" fill="#d9b6e8" />
+              <rect x="47" y="66" width="10" height="7" rx="1.5" fill="#d9b6e8" />
+              <rect x="61" y="66" width="10" height="7" rx="1.5" fill="#d9b6e8" />
+              <!-- Checkmark Ungu -->
+              <circle cx="82" cy="69" r="11" fill="#69167e" />
+              <path d="M77 69 L80.5 72.5 L87 66" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- Grafik Batang & Panah Pertumbuhan -->
+            <g>
+              <rect x="110" y="69" width="12" height="28" rx="2.5" fill="#6a1780" />
+              <rect x="126" y="57" width="12" height="40" rx="2.5" fill="#6a1780" />
+              <rect x="142" y="42" width="14" height="55" rx="3" fill="#6a1780" />
+              <path d="M96 79 Q 120 72 152 38" stroke="#68157f" stroke-width="6.5" fill="none" stroke-linecap="round" />
+              <polygon points="159,31 144,36 153,49" fill="#68157f" />
+            </g>
+
+            <!-- Tumpukan Koin Ungu & Koin Rp -->
+            <g filter="url(#softShadow)">
+              <ellipse cx="44" cy="74" rx="20" ry="7" fill="#8d2bb2" />
+              <path d="M24 74 v8 c0 3.8 9 7 20 7 s20 -3.2 20 -7 v-8 Z" fill="#6c1782" />
+              <path d="M24 82 v8 c0 3.8 9 7 20 7 s20 -3.2 20 -7 v-8 Z" fill="#58106b" />
+              <!-- Koin Utama -->
+              <ellipse cx="78" cy="91" rx="22" ry="22" fill="url(#coinGrad)" stroke="#ffffff" stroke-width="3" />
+              <circle cx="78" cy="91" r="17" fill="none" stroke="#dcb7ec" stroke-width="1.8" />
+              <text x="78" y="99" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="17" fill="#ffffff" text-anchor="middle">Rp</text>
+            </g>
+            <path d="M12 95 C 10 50, 45 15, 120 18" stroke="#711986" stroke-width="4.5" fill="none" stroke-linecap="round" />
+          </g>
+
+          <!-- GROUP KANAN: AMARTHA REPAYMENT RATE -->
+          <g transform="translate(200, 0)">
+            <!-- Simbol Mandala Amartha -->
+            <g transform="translate(25, 23)">
+              <circle cx="26" cy="26" r="4.5" fill="#68157f" />
+              <path d="M 26 13 C 24 13 22 17 22 19 C 22 22 25 22 26 22 C 27 22 30 22 30 19 C 30 17 28 13 26 13 Z" fill="#68157f" />
+              <path d="M 26 39 C 24 39 22 35 22 33 C 22 30 25 30 26 30 C 27 30 30 30 30 33 C 30 35 28 39 26 39 Z" fill="#68157f" />
+              <path d="M 13 26 C 13 24 17 22 19 22 C 22 22 22 25 22 26 C 22 27 22 30 19 30 C 17 30 13 28 13 26 Z" fill="#68157f" />
+              <path d="M 39 26 C 39 24 35 22 33 22 C 30 22 30 25 30 26 C 30 27 30 30 33 30 C 35 30 39 28 39 26 Z" fill="#68157f" />
+              <path d="M 17 17 C 16 19 18 21 20 22 C 22 23 23 21 22 19 C 21 17 19 15 17 17 Z" fill="#68157f" />
+              <path d="M 35 35 C 34 37 32 35 30 34 C 28 33 29 31 30 29 C 32 28 36 33 35 35 Z" fill="#68157f" />
+              <path d="M 35 17 C 33 16 31 18 30 20 C 29 22 31 23 33 22 C 35 21 37 19 35 17 Z" fill="#68157f" />
+              <path d="M 17 35 C 19 36 21 34 22 32 C 23 30 21 29 19 30 C 17 31 15 33 17 35 Z" fill="#68157f" />
+              <circle cx="26" cy="26" r="21" stroke="#68157f" stroke-width="2.4" stroke-dasharray="3.5 2.5" fill="none" />
+            </g>
+
+            <!-- Teks -->
+            <text x="86" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="33" fill="#68157f" letter-spacing="-1">amartha</text>
+            <text x="24" y="87" font-family="'Plus Jakarta Sans', sans-serif" font-style="italic" font-weight="800" font-size="35" fill="#5c1271" letter-spacing="-0.5">Repayment</text>
+            <text x="32" y="132" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="52" fill="#500b63" letter-spacing="-1.5">Rate</text>
+          </g>
+
+          <!-- GROUP BAWAH: PITA BONE BOLANGO -->
+          <g transform="translate(0, 118)">
+            <path d="M 240 12 C 320 2, 420 8, 480 3 C 440 11, 340 13, 240 12 Z" fill="url(#lightWaveGrad)" />
+            <path d="M 50 17 C 120 7, 240 6, 440 6 C 485 6, 480 34, 435 34 C 280 34, 150 35, 75 32 C 35 30, 20 21, 50 17 Z" fill="url(#ribbonGrad)" filter="url(#softShadow)" />
+            <text x="270" y="27" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="19" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">
+              — Bone Bolango —
+            </text>
+            <path d="M 52 28 C 95 38, 220 54, 430 40 C 320 56, 140 52, 90 38 C 60 29, 38 31, 52 28 Z" fill="#8b27ad" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Indikator Loading Bersih & Elegan -->
+      <div class="flex flex-col items-center gap-3">
+        <div class="w-48 h-1.5 bg-purple-100 rounded-full overflow-hidden relative">
+          <div id="loaderBar" class="h-full bg-gradient-to-r from-amartha-700 via-amartha-500 to-purple-400 w-1/3 rounded-full transition-all duration-300"></div>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-semibold text-amartha-900 tracking-wide">
+          <i class="fa-solid fa-circle-notch fa-spin text-amartha-600"></i>
+          <span>Memuat Repayment Rate Bone Bolango...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OVERLAY DRAG & DROP FILE (MUNCUL OTOMATIS SAAT USER MENARIK FILE) -->
+    <div id="dragDropOverlay" class="fixed inset-0 bg-amartha-950/80 backdrop-blur-md z-50 flex flex-col items-center justify-center pointer-events-none opacity-0 transition-all duration-200">
+      <div class="bg-white p-8 rounded-3xl border-4 border-dashed border-amartha-500 shadow-2xl flex flex-col items-center max-w-md mx-4 text-center">
+        <div class="w-20 h-20 rounded-2xl bg-purple-100 text-amartha-700 flex items-center justify-center text-3xl mb-4 animate-bounce">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+        </div>
+        <h3 class="text-xl font-bold text-slate-900 mb-1">Lepaskan Berkas di Sini</h3>
+        <p class="text-xs text-slate-600 mb-4">Mendukung berkas Excel, PDF, foto bukti pembayaran, slip angsuran, dll.</p>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amartha-50 text-amartha-700 border border-purple-200">
+          <i class="fa-solid fa-check"></i> Siap diproses & diunduh ke browser
+        </span>
+      </div>
+    </div>
+  </main>
+
+  <!-- FLOATING TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    const iframe = document.getElementById('appIframe');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loaderBar = document.getElementById('loaderBar');
+    const dragDropOverlay = document.getElementById('dragDropOverlay');
+
+    // Progress bar dinamis saat loading
+    let progress = 25;
+    const progressInterval = setInterval(() => {
+      if (progress < 90) {
+        progress += 15;
+        if (loaderBar) loaderBar.style.width = progress + '%';
+      }
+    }, 280);
+
+    // Saat iframe Google Apps Script selesai dimuat
+    function onIframeLoaded() {
+      clearInterval(progressInterval);
+      if (loaderBar) loaderBar.style.width = '100%';
+
+      // Menghilangkan loading screen secara mulus
+      setTimeout(() => {
+        if (loadingOverlay) {
+          loadingOverlay.classList.add('opacity-0', 'pointer-events-none');
+          setTimeout(() => {
+            loadingOverlay.style.display = 'none';
+          }, 700);
+        }
+      }, 400);
+    }
+
+    // DRAG AND DROP FILE HANDLER (DI SELURUH LAYAR)
+    let dragCounter = 0;
+    window.addEventListener('dragenter', (e) => {
+      e.preventDefault();
+      dragCounter++;
+      if (e.dataTransfer && e.dataTransfer.types.includes('Files')) {
+        dragDropOverlay.classList.remove('opacity-0', 'pointer-events-none');
+        dragDropOverlay.classList.add('opacity-100');
+      }
+    });
+
+    window.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      dragCounter--;
+      if (dragCounter <= 0) {
+        dragCounter = 0;
+        dragDropOverlay.classList.remove('opacity-100');
+        dragDropOverlay.classList.add('opacity-0', 'pointer-events-none');
+      }
+    });
+
+    window.addEventListener('dragover', (e) => e.preventDefault());
+
+    window.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dragCounter = 0;
+      dragDropOverlay.classList.remove('opacity-100');
+      dragDropOverlay.classList.add('opacity-0', 'pointer-events-none');
+
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        const files = e.dataTransfer.files;
+        for (let i = 0; i < files.length; i++) {
+          triggerFileDownload(files[i]);
+        }
+        showToast('success', `${files.length} berkas berhasil diterima & disimpan ke unduhan browser.`);
+      }
+    });
+
+    // Otomatis mengunduh berkas yang di-drop ke folder unduhan browser
+    function triggerFileDownload(file) {
+      const url = URL.createObjectURL(file);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = file.name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+    }
+
+    // LISTENER UNDUHAN DARI GOOGLE APPS SCRIPT (POSTMESSAGE)
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'DOWNLOAD_FILE') {
+        const { fileName, base64Data, mimeType } = event.data;
+        const linkSource = `data:${mimeType || 'application/octet-stream'};base64,${base64Data}`;
+        const downloadLink = document.createElement('a');
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName || 'Amartha-Report.xlsx';
+        downloadLink.click();
+        showToast('success', `Berhasil mengunduh: ${fileName}`);
+      }
+    });
+
+    // SISTEM NOTIFIKASI TOAST (TANPA MENGGUNAKAN ALERT)
+    function showToast(type, message) {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-lg text-xs font-semibold text-white transition-all duration-300 transform translate-y-2 opacity-0 max-w-sm bg-amartha-800 border border-purple-400';
+      toast.innerHTML = `<i class="fa-solid fa-circle-check text-purple-300 text-sm"></i> <span>${message}</span>`;
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 350);
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
