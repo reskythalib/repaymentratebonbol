@@ -232,8 +232,57 @@
     </div>
   </main>
 
+  <!-- ================= TOMBOL FLOATING UNDUH APLIKASI ================= -->
+  <aside id="installAppContainer" class="fixed bottom-6 right-5 z-40 flex items-center transition-all duration-500">
+    <button 
+      id="installAppBtn"
+      onclick="handleAppInstallClick()"
+      class="group relative flex items-center gap-2.5 px-4 py-3 bg-gradient-to-r from-amartha-800 to-amartha-600 hover:from-amartha-900 hover:to-amartha-700 text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 border border-purple-300/40 active:scale-95">
+      <div class="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-white text-xs">
+        <i class="fa-solid fa-download animate-pulse"></i>
+      </div>
+      <span class="text-xs font-bold tracking-wide">Unduh Aplikasi</span>
+      <span class="absolute -top-1 -right-1 flex h-3 w-3">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3 bg-fuchsia-500"></span>
+      </span>
+    </button>
+  </aside>
+
+  <!-- ================= MODAL PETUNJUK UNDUH IOS / PANDUAN MANUAL ================= -->
+  <div id="iosInstallModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-purple-100 flex flex-col items-center text-center">
+      <div class="w-14 h-14 rounded-2xl bg-purple-100 text-amartha-700 flex items-center justify-center text-2xl mb-3">
+        <i class="fa-brands fa-apple"></i>
+      </div>
+      <h3 class="text-base font-bold text-slate-900 mb-1">Unduh & Pasang di Layar Utama</h3>
+      <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+        Untuk menginstal aplikasi di iPhone/iPad atau browser Anda:
+      </p>
+      <div class="w-full bg-purple-50/70 rounded-2xl p-3.5 mb-5 text-left text-xs text-slate-700 space-y-2.5 border border-purple-100">
+        <div class="flex items-center gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-amartha-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">1</span>
+          <span>Ketuk tombol <strong>Bagikan (Share)</strong> <i class="fa-solid fa-arrow-up-from-bracket text-amartha-700 mx-1"></i> di menu browser.</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-amartha-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">2</span>
+          <span>Gulir ke bawah dan pilih <strong>"Tambahkan ke Layar Utama" (Add to Home Screen)</strong>.</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-amartha-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">3</span>
+          <span>Ketuk <strong>Tambah</strong> di pojok kanan atas. Aplikasi siap digunakan!</span>
+        </div>
+      </div>
+      <button 
+        onclick="closeIosInstallModal()" 
+        class="w-full py-2.5 bg-amartha-700 hover:bg-amartha-800 text-white font-semibold rounded-xl text-xs transition">
+        Mengerti
+      </button>
+    </div>
+  </div>
+
   <!-- FLOATING TOAST NOTIFICATION CONTAINER -->
-  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+  <div id="toastContainer" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
@@ -241,6 +290,103 @@
     const loadingOverlay = document.getElementById('loadingOverlay');
     const loaderBar = document.getElementById('loaderBar');
     const dragDropOverlay = document.getElementById('dragDropOverlay');
+
+    // ================= PWA MANIFEST & SERVICE WORKER INJECTOR =================
+    // Logo SVG resmi untuk icon aplikasi
+    const appIconSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%239d2bb5'/%3E%3Cstop offset='100%25' stop-color='%234a0d5c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='28' fill='%23ffffff' stroke='%23f3e8f8' stroke-width='2'/%3E%3Cg transform='translate(6, 12) scale(0.22)'%3E%3Crect x='36' y='32' width='76' height='52' rx='10' fill='%234d105c'/%3E%3Crect x='42' y='38' width='66' height='46' rx='6' fill='%23f8f4fb'/%3E%3Ccircle cx='82' cy='69' r='11' fill='%2369167e'/%3E%3Cpath d='M77 69 L80.5 72.5 L87 66' stroke='%23ffffff' stroke-width='3' stroke-linecap='round'/%3E%3Crect x='110' y='69' width='12' height='28' rx='2.5' fill='%236a1780'/%3E%3Crect x='126' y='57' width='12' height='40' rx='2.5' fill='%236a1780'/%3E%3Crect x='142' y='42' width='14' height='55' rx='3' fill='%236a1780'/%3E%3Cpath d='M96 79 Q 120 72 152 38' stroke='%2368157f' stroke-width='7' fill='none' stroke-linecap='round'/%3E%3Cpolygon points='159,31 144,36 153,49' fill='%2368157f'/%3E%3Cellipse cx='78' cy='91' rx='22' ry='22' fill='%2368157f' stroke='%23ffffff' stroke-width='3'/%3E%3Ctext x='78' y='99' font-family='sans-serif' font-weight='bold' font-size='17' fill='%23ffffff' text-anchor='middle'%3ERp%3C/text%3E%3Cg transform='translate(200, 0)'%3E%3Ccircle cx='51' cy='49' r='4.5' fill='%2368157f'/%3E%3Ccircle cx='51' cy='49' r='21' stroke='%2368157f' stroke-width='2.4' stroke-dasharray='3.5 2.5' fill='none'/%3E%3Ctext x='86' y='44' font-family='sans-serif' font-weight='bold' font-size='33' fill='%2368157f'%3Eamartha%3C/text%3E%3Ctext x='24' y='87' font-family='sans-serif' font-style='italic' font-weight='800' font-size='35' fill='%235c1271'%3ERepayment%3C/text%3E%3Ctext x='32' y='132' font-family='sans-serif' font-weight='800' font-size='52' fill='%23500b63'%3ERate%3C/text%3E%3C/g%3E%3Cpath d='M 50 135 C 120 125, 440 125, 440 150 C 280 153, 75 151, 50 135 Z' fill='url(%23g)'/%3E%3Ctext x='245' y='145' font-family='sans-serif' font-weight='bold' font-size='18' fill='%23ffffff' text-anchor='middle'%3EBone Bolango%3C/text%3E%3C/g%3E%3C/svg%3E`;
+
+    // Buat Web App Manifest dinamis agar peramban mengenali sebagai aplikasi yang dapat diunduh/diinstal
+    const manifestData = {
+      name: "Repayment Rate Bone Bolango",
+      short_name: "Repayment Rate",
+      description: "Aplikasi Monitoring Repayment Rate Amartha Bone Bolango",
+      start_url: window.location.href,
+      display: "standalone",
+      orientation: "portrait-primary",
+      background_color: "#ffffff",
+      theme_color: "#68157f",
+      icons: [
+        {
+          src: appIconSvg,
+          sizes: "192x192 512x512",
+          type: "image/svg+xml",
+          purpose: "any maskable"
+        }
+      ]
+    };
+    const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/manifest+json' });
+    const manifestUrl = URL.createObjectURL(manifestBlob);
+    const manifestLink = document.createElement('link');
+    manifestLink.rel = 'manifest';
+    manifestLink.href = manifestUrl;
+    document.head.appendChild(manifestLink);
+
+    // Registrasi Service Worker ringan untuk memenuhi kriteria instalasi PWA di peramban
+    if ('serviceWorker' in navigator) {
+      const swCode = `
+        self.addEventListener('install', (e) => self.skipWaiting());
+        self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
+        self.addEventListener('fetch', (e) => {
+          // Bekerja langsung secara online
+        });
+      `;
+      const swBlob = new Blob([swCode], { type: 'application/javascript' });
+      const swUrl = URL.createObjectURL(swBlob);
+      navigator.serviceWorker.register(swUrl).catch(() => {});
+    }
+
+    // ================= HANDLER EVENT INSTALASI APLIKASI =================
+    let deferredInstallPrompt = null;
+    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    // Sembunyikan tombol jika sudah berjalan di mode aplikasi terpasang (Standalone)
+    if (isStandalone) {
+      const container = document.getElementById('installAppContainer');
+      if (container) container.style.display = 'none';
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Mencegah prompt bawaan muncul mendadak
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      const installContainer = document.getElementById('installAppContainer');
+      if (installContainer && !isStandalone) {
+        installContainer.style.display = 'flex';
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      const installContainer = document.getElementById('installAppContainer');
+      if (installContainer) installContainer.style.display = 'none';
+      showToast('success', 'Aplikasi berhasil diunduh dan dipasang!');
+    });
+
+    async function handleAppInstallClick() {
+      // Jika browser mendukung event instalasi langsung (Chrome, Android, Edge, dsb)
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        const { outcome } = await deferredInstallPrompt.userChoice;
+        if (outcome === 'accepted') {
+          showToast('success', 'Memulai penginstalan aplikasi...');
+        }
+        deferredInstallPrompt = null;
+      } else if (isIos) {
+        // Tampilkan modal panduan iOS
+        document.getElementById('iosInstallModal').classList.remove('hidden');
+        document.getElementById('iosInstallModal').classList.add('flex');
+      } else {
+        // Fallback untuk browser lain
+        showToast('info', 'Gunakan menu browser titik tiga (⋮) lalu pilih "Instal Aplikasi" atau "Tambahkan ke Layar Utama".');
+      }
+    }
+
+    function closeIosInstallModal() {
+      const modal = document.getElementById('iosInstallModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
 
     // Progress bar dinamis saat loading
     let progress = 25;
